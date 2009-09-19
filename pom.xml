@@ -1,0 +1,60 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.jvnet.hudson.plugins</groupId>
+    <artifactId>plugin</artifactId>
+    <version>1.322</version><!-- which version of Hudson is this plugin built against? -->
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+  
+  <artifactId>dbCharts</artifactId>
+  <version>0.2-SNAPSHOT</version>
+  <name>dbCharts</name>
+  <description>This plugin allows adding to hudson charts backed by JDBC database connection.</description>
+  <url>http://wiki.hudson-ci.org/display/HUDSON/dbCharts+Plugin</url>
+  <packaging>hpi</packaging>
+  
+  <dependencies>
+  	<dependency>
+    	<groupId>hsqldb</groupId>
+    	<artifactId>hsqldb</artifactId>
+    	<version>1.8.0.10</version>
+    	<!-- scope>test</scope-->
+	</dependency>
+	
+	<dependency>
+  		<groupId>mysql</groupId>
+  		<artifactId>mysql-connector-java</artifactId>
+  		<version>5.1.6</version>
+  		<!--scope>runtime</scope-->
+	</dependency>
+	  
+	<dependency>
+  		<groupId>postgresql</groupId>
+  		<artifactId>postgresql</artifactId>
+  		<version>8.3-603.jdbc4</version>
+  		<!-- scope>runtime</scope-->
+	</dependency>
+  </dependencies>
+   
+  <build>
+  	<plugins>
+  		<plugin>
+  			<groupId>org.jvnet.hudson.tools</groupId>
+  			<artifactId>maven-hpi-plugin</artifactId>
+  			<extensions>true</extensions>
+  			<configuration>
+  				<compatibleSinceVersion>1.0-SNAPSHOT</compatibleSinceVersion>
+  			</configuration>
+  		</plugin>
+  	</plugins>
+  </build>
+  
+  <licenses>
+    <license>
+      <name>MIT license</name>
+      <comments>All source code is under the MIT license.</comments>
+    </license>
+  </licenses>
+
+</project>

@@ -1,0 +1,14 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+<div align="right">
+  <div>
+    <table>
+	    <tr><td>
+		    <j:forEach var="chart" items="${from.charts}">
+		    	<!-- tr><td>${chart.title}</td></tr-->
+		    	<tr><td><img src="${from.urlName}/trend?chart=${chart.name}" lazymap="${from.urlName}/trendMap?chart=${chart.name}"/></td></tr>
+		    </j:forEach>
+	    </td></tr>
+    </table>
+  </div>
+</div>
+</j:jelly>
