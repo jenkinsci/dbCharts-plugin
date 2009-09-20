@@ -56,4 +56,20 @@
       <comments>All source code is under the MIT license.</comments>
     </license>
   </licenses>
+
+ <developers>
+     <developer>
+         <id>ptab</id>
+         <name>Piotr Tabor</name>
+         <email>piotr.tabor@gmail.com</email>
+	 <url>http://piotr.tabor.waw.pl</url>
+      </developer>
+ </developers>
+
+  <!--scm>
+    <connection>scm:svn:https://guest@svn.dev.java.net/svn/hudson/tags/dbCharts-0.2</connection>
+    <developerConnection>scm:svn:https://svn.dev.java.net/svn/hudson/tags/dbCharts-0.2</developerConnection>
+    <url>https://hudson.dev.java.net/source/browse/hudson/hudson/plugins/dbCharts/tags/dbCharts-0.2</url>
+  </scm-->
+
 </project>
