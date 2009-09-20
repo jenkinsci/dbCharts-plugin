@@ -2,10 +2,16 @@ package hudson.plugins.dbcharts;
 
 import hudson.model.AbstractProject;
 import hudson.model.Action;
+import hudson.model.ProminentProjectAction;
 import hudson.util.ChartUtil;
 import hudson.util.ShiftedCategoryAxis;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Paint;
+import java.awt.Polygon;
 import java.awt.Rectangle;
+import java.awt.Shape;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -22,6 +28,8 @@ import org.jfree.chart.entity.ChartEntity;
 import org.jfree.chart.entity.EntityCollection;
 import org.jfree.chart.imagemap.ImageMapUtilities;
 import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.DefaultDrawingSupplier;
+import org.jfree.chart.plot.DrawingSupplier;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.jdbc.JDBCCategoryDataset;
 import org.jfree.ui.RectangleInsets;
@@ -31,25 +39,37 @@ import org.kohsuke.stapler.StaplerResponse;
 public class DbChartAction  implements Action
 {
     private static final Logger logger=Logger.getLogger( DbChartAction.class.getCanonicalName());
-    private final AbstractProject project;
+//    private final AbstractProject<?,?> project;
     private final DbChartPublisher publisher;
     
-    public DbChartAction( AbstractProject project, DbChartPublisher publisher )
+    /** All plots share the same JFreeChart drawing supplier object. */
+    private static final DrawingSupplier supplier = new DefaultDrawingSupplier(
+            DefaultDrawingSupplier.DEFAULT_PAINT_SEQUENCE,
+            DefaultDrawingSupplier.DEFAULT_OUTLINE_PAINT_SEQUENCE,
+            DefaultDrawingSupplier.DEFAULT_STROKE_SEQUENCE,
+            DefaultDrawingSupplier.DEFAULT_OUTLINE_STROKE_SEQUENCE,
+            // the plot data points are a small diamond shape 
+            new Shape[] { new Polygon(new int[] {3, 0, -3, 0},
+                    new int[] {0, 4, 0, -4}, 4) }
+    );
+    
+    public DbChartAction( AbstractProject<?,?> project, DbChartPublisher publisher )
     {        
         super();
         logger.info( "DbChartAction created for project:"+project);
-        this.project = project;
+//  /      this.project = project;
         this.publisher = publisher;
     }
 
     public String getDisplayName()
     {
-        return "Db Chart";
+       // return "Db Chart";
+        return null;
     }
 
     public String getIconFileName()
     {
-        return "folder.gif";
+        return null;//"folder.gif";
     }
     
     public String getUrlName()
@@ -137,9 +157,6 @@ public class DbChartAction  implements Action
                        buffers[columnIndex]=new StringBuilder(cie.getColumnKey()+": ");
                        starts[columnIndex]=cie.getArea().getBounds().x;
                        ends[columnIndex]=cie.getArea().getBounds().x+cie.getArea().getBounds().width;
-//                       rectangles[columnIndex]=new Rectangle(
-//                           cie.getArea().getBounds().x,dataArea.y,
-//                           cie.getArea().getBounds().width,dataArea.height);
                    }                   
                    buffers[columnIndex].append(" "+cie.getRowKey()+"="+cie.getDataset().getValue( rowIndex,columnIndex));
                    
@@ -171,20 +188,6 @@ public class DbChartAction  implements Action
             
         }
         ps.println("</map>");
-        //<area shape="poly" coords="498,27,497,30,495,30,492,30,492,27,492,25,495,24,497,25,498,27,498,27" title="(2*valueDouble, 2009-08-29 19:10:00.0) = 0,678" alt="" nohref="nohref"/>
-
-        
-        
-
-        //response.getWriter()
-        //info.getPlotInfo().getDataArea();
-        
-//        ChartUtil.generateClickableMap(
-//                request,
-//                response,
-//                buildChart(chartParams),
-//                CHART_WIDTH,
-//                CHART_HEIGHT);
     }
 
     /**
@@ -200,8 +203,6 @@ public class DbChartAction  implements Action
      *             {@link ResultAction#doGraph(StaplerRequest, StaplerResponse, int)}
      */
     public void doTrend(final StaplerRequest request, final StaplerResponse response) throws IOException {
-        //AbstractBuild<?,?> lastBuild = this.getLastFinishedBuild();
-        //CcccBuildAction lastAction = lastBuild.getAction(CcccBuildAction.class);
         Chart c=getChartByName( request.getParameter("chart" ) );
         try
         {
@@ -225,45 +226,23 @@ public class DbChartAction  implements Action
     }
 
     private JFreeChart buildChart(Chart c) throws ClassNotFoundException, SQLException
-    {
-        //Connection connection=Connection.
-     //   JDBCCategoryDataset dataset=new JDBCCategoryDataset("jdbc:mysql://localhost/test1","com.mysql.jdbc.Driver","root","");
-        
+    {        
         JDBCCategoryDataset dataset=new JDBCCategoryDataset(c.getJDBCConnection().url,c.getJDBCConnection().getDriver(),c.getJDBCConnection().user,c.getJDBCConnection().passwd);
         dataset.executeQuery(c.sqlQuery);
-        //dataset.
         JFreeChart chart=ChartFactory.createLineChart( c.title, c.categoryAxisLabel,c.valuesAxisLabel, dataset, 
                                                               PlotOrientation.VERTICAL, true, true, false );
         final CategoryPlot plot = chart.getCategoryPlot();
+        plot.setDomainGridlinePaint(Color.black);
+        plot.setRangeGridlinePaint(Color.black);
+        plot.setDrawingSupplier(supplier);
+        plot.setBackgroundPaint( Color.white );
         
-//        LineAndShapeRenderer ar = new LineAndShapeRenderer() {
-            
-            
-//            @Override
-//            public String generateURL(CategoryDataset dataset, int row, int column) {
-//                NumberOnlyBuildLabel label = (NumberOnlyBuildLabel) dataset.getColumnKey(column);
-//                return relPath+label.build.getNumber()+"/testReport/";
-//            }
-
-            
-            
-//            @Override
-//            public String generateToolTip(CategoryDataset dataset, int row, int column) {
-//                NumberOnlyBuildLabel label = (NumberOnlyBuildLabel) dataset.getColumnKey(column);
-//                AbstractTestResultAction a = label.build.getAction(AbstractTestResultAction.class);
-//                switch (row) {
-//                    case 0:
-//                        return String.valueOf(Messages.AbstractTestResultAction_fail(a.getFailCount()));
-//                    case 1:
-//                        return String.valueOf(Messages.AbstractTestResultAction_skip(a.getSkipCount()));
-//                    default:
-//                        return String.valueOf(Messages.AbstractTestResultAction_test(a.getTotalCount()));
-//                }
-//            }
-//        };
-//        plot.setRenderer(ar);
+        chart.setBackgroundPaint( Color.white );
+        chart.getTitle().setFont( new Font( 
+                chart.getTitle().getFont().getName(), 
+                chart.getTitle().getFont().getStyle(), 
+                12 ) );
         
-
         CategoryAxis domainAxis = new ShiftedCategoryAxis(null);
         plot.setDomainAxis(domainAxis);
         domainAxis.setCategoryLabelPositions(CategoryLabelPositions.UP_90);
@@ -272,12 +251,8 @@ public class DbChartAction  implements Action
         domainAxis.setUpperMargin(0.0);
         domainAxis.setCategoryMargin(0.0);
 
-        //final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
-//        rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-
         plot.setInsets(new RectangleInsets(0,0,0,5.0));
-        
-        //chart.
+
         return chart;
     }
     
