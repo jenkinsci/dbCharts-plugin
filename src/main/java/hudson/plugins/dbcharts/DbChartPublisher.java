@@ -5,7 +5,6 @@ import hudson.model.AbstractProject;
 import hudson.model.Action;
 import hudson.model.Descriptor;
 import hudson.model.Hudson;
-import hudson.model.Project;
 import hudson.plugins.dbcharts.CustomJDBCConnection.CustomJDBCConnectionDescriptor;
 import hudson.plugins.dbcharts.MySQLJDBCConnection.MySQLJDBCConnectionDescriptor;
 import hudson.plugins.dbcharts.PostgresqlJDBCConnection.PostgresqlJDBCConnectionDescriptor;
@@ -34,7 +33,7 @@ import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
 
 @Extension
-public class DbChartPublisher  extends Recorder
+public class DbChartPublisher extends Recorder
 {
     static final Logger logger=Logger.getLogger( DbChartPublisher.class.getCanonicalName() );
     private final List<Chart> charts;
@@ -82,7 +81,7 @@ public class DbChartPublisher  extends Recorder
 
         public DescriptorImpl()
         {
-            logger.info( "DescriptorImpl constructed");
+            logger.fine("DescriptorImpl constructed");
             load();
         }
         
@@ -98,7 +97,7 @@ public class DbChartPublisher  extends Recorder
             while(e.hasMoreElements()){
                 res.add( e.nextElement().getClass().getCanonicalName() );
             }
-            logger.info( "DescriptorImpl.getDrivers returned:"+Arrays.toString( res.toArray()) );
+            logger.fine( "DescriptorImpl.getDrivers returned:"+Arrays.toString( res.toArray()) );
             return res;
         }
         
@@ -116,10 +115,11 @@ public class DbChartPublisher  extends Recorder
             return "dbCharts configuration";
         }
        
+        @Override
         public boolean configure( StaplerRequest req, JSONObject json )
             throws hudson.model.Descriptor.FormException
         {
-            logger.info( "DescriptorImpl.configure:"+json );
+            logger.fine( "DescriptorImpl.configure:"+json );
             connections = new LinkedList<JDBCConnection>();
             Object ob=json.get( "connections"  );
             try{
@@ -131,14 +131,14 @@ public class DbChartPublisher  extends Recorder
                             .newInstance(o);
                         connections.add( c);
                     }
-                }else{
+                } else if (ob!=null) {
                     JDBCConnection c=(JDBCConnection)Class.forName( ((JSONObject)ob).getString("stapler-class"))
                         .getConstructor( JSONObject.class )
                         .newInstance(ob);
-                    connections.add( c);                
+                    connections.add( c);
                 }
             }catch(Exception e){
-                throw new FormException( e, "connections" );
+                throw new FormException( "Failed to save dbCharts connections", e, "connections" );
             }
             save();
             return super.configure( req, json );
@@ -162,7 +162,7 @@ public class DbChartPublisher  extends Recorder
             res.add(mysql);
             res.add( pgsql );
             res.add(custom);            
-            logger.info("getJDBCConnectionDescriptors(): custom="+custom+"; mysql="+mysql);
+            logger.fine("getJDBCConnectionDescriptors(): custom="+custom+"; mysql="+mysql);
             return res;
         }
 

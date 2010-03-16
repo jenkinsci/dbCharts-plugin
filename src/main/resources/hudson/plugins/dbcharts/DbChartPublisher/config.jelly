@@ -1,11 +1,6 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
  <f:section title="Database charts">
-    <!--	
-      optional @help points to the help document HTML. ${rootURL}/plugin/dbCharts
-      is mapped to our resources/ directory, so this is a convenient way to serve
-      static resources.
-    -->
-    <f:entry title="Charts" description="Configuration of the charts"  help="${rootURL}/plugin/dbCharts/help-localConfig.html">
+    <f:entry title="Charts" description="Configuration of the charts">
 		<f:repeatable field="charts"><!--var="connection" items="${it.connections}"-->
 			<table>
 			 
@@ -15,7 +10,6 @@
 			<f:entry title="Category axis label"  field="categoryAxisLabel"><f:textbox default="Category"/></f:entry>
 			<f:entry title="Chart width" field="width"><f:textbox default="400"/></f:entry>
 			<f:entry title="Chart height" field="height"><f:textbox default="600"/></f:entry>
-			
 			
 			<f:entry title='JDBC connection'>
 				<select class="setting-input" name="_.connectionName">

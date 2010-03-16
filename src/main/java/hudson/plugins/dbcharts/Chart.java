@@ -88,7 +88,7 @@ public class Chart
         public String getDisplayName()
         {
             return "";
-        }       
+        }
         
         public FormValidation doCheckName(@QueryParameter String value) throws IOException, ServletException {
             if(value.length()==0)
@@ -104,9 +104,9 @@ public class Chart
             for(JDBCConnection c: Hudson.getInstance().getDescriptorByType(DbChartPublisher.DescriptorImpl.class).connections){
                 res.add( c.name );
             }
-            logger.info( "getConnectionNames: "+Arrays.toString( res.toArray()));
+            logger.fine( "getConnectionNames: "+Arrays.toString( res.toArray()));
             return res;
-        }        
+        }
         
     } 
 

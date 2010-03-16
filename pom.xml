@@ -3,25 +3,25 @@
   <parent>
     <groupId>org.jvnet.hudson.plugins</groupId>
     <artifactId>plugin</artifactId>
-    <version>1.322</version><!-- which version of Hudson is this plugin built against? -->
+    <version>1.324</version><!-- which version of Hudson is this plugin built against? -->
     <relativePath>../pom.xml</relativePath>
   </parent>
   
   <artifactId>dbCharts</artifactId>
-  <version>0.2.2-SNAPSHOT</version>
+  <version>0.3-SNAPSHOT</version>
   <name>dbCharts</name>
   <description>This plugin allows adding to hudson charts backed by JDBC database connection.</description>
   <url>http://wiki.hudson-ci.org/display/HUDSON/dbCharts+Plugin</url>
   <packaging>hpi</packaging>
   
   <dependencies>
-  	<dependency>
+    <dependency>
     	<groupId>hsqldb</groupId>
     	<artifactId>hsqldb</artifactId>
     	<version>1.8.0.10</version>
     	<!-- scope>test</scope-->
-	</dependency>
-	
+    </dependency>
+
 	<dependency>
   		<groupId>mysql</groupId>
   		<artifactId>mysql-connector-java</artifactId>
@@ -65,10 +65,4 @@
 	 <url>http://piotr.tabor.waw.pl</url>
       </developer>
  </developers>
-
-  <!--scm>
-    <connection>scm:svn:https://guest@svn.dev.java.net/svn/hudson/tags/dbCharts-0.2</connection>
-    <developerConnection>scm:svn:https://svn.dev.java.net/svn/hudson/tags/dbCharts-0.2</developerConnection>
-    <url>https://hudson.dev.java.net/source/browse/hudson/hudson/plugins/dbCharts/tags/dbCharts-0.2</url>
-  </scm-->
 </project>
