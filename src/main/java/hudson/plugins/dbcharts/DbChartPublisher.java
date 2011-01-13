@@ -17,6 +17,7 @@ import hudson.util.FormValidation;
 import java.io.IOException;
 import java.sql.Driver;
 import java.sql.DriverManager;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.LinkedList;
@@ -77,7 +78,7 @@ public class DbChartPublisher extends Recorder
     @Extension
     public static final class DescriptorImpl extends BuildStepDescriptor<Publisher>{
         private static final Logger logger=Logger.getLogger( DescriptorImpl.class.getCanonicalName() );
-        public List<JDBCConnection> connections;
+        public List<JDBCConnection> connections = new ArrayList<JDBCConnection>();
 
         public DescriptorImpl()
         {
