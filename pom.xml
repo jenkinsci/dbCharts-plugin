@@ -3,15 +3,15 @@
   <parent>
     <groupId>org.jvnet.hudson.plugins</groupId>
     <artifactId>plugin</artifactId>
-    <version>1.324</version><!-- which version of Hudson is this plugin built against? -->
+    <version>1.358</version><!-- which version of Hudson is this plugin built against? -->
     <relativePath>../pom.xml</relativePath>
   </parent>
   
   <artifactId>dbCharts</artifactId>
   <version>0.4-SNAPSHOT</version>
   <name>dbCharts</name>
-  <description>This plugin allows adding to hudson charts backed by JDBC database connection.</description>
-  <url>http://wiki.hudson-ci.org/display/HUDSON/dbCharts+Plugin</url>
+  <description>This plugin allows adding charts backed by JDBC database connection.</description>
+  <url>http://wiki.jenkins-ci.org/display/JENKINS/dbCharts+Plugin</url>
   <packaging>hpi</packaging>
   
   <dependencies>
@@ -37,19 +37,6 @@
 	</dependency>
   </dependencies>
    
-  <build>
-  	<plugins>
-  		<plugin>
-  			<groupId>org.jvnet.hudson.tools</groupId>
-  			<artifactId>maven-hpi-plugin</artifactId>
-  			<extensions>true</extensions>
-  			<configuration>
-  				<compatibleSinceVersion>0.2-SNAPSHOT</compatibleSinceVersion>
-  			</configuration>
-  		</plugin>
-  	</plugins>
-  </build>
-  
   <licenses>
     <license>
       <name>MIT license</name>
