@@ -8,7 +8,7 @@
   </parent>
   
   <artifactId>dbCharts</artifactId>
-  <version>0.4</version>
+  <version>0.5-SNAPSHOT</version>
   <name>dbCharts</name>
   <description>This plugin allows adding charts backed by JDBC database connection.</description>
   <url>http://wiki.jenkins-ci.org/display/JENKINS/dbCharts+Plugin</url>
@@ -52,10 +52,4 @@
 	 <url>http://piotr.tabor.waw.pl</url>
       </developer>
  </developers>
-
-  <scm>
-    <connection>scm:svn:https://svn.jenkins-ci.org/tags/dbCharts-0.4</connection>
-    <developerConnection>scm:svn:https://svn.jenkins-ci.org/tags/dbCharts-0.4</developerConnection>
-    <url>http://fisheye.jenkins-ci.org/browse/Hudson/tags/dbCharts-0.4</url>
-  </scm>
 </project>
