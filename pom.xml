@@ -48,7 +48,7 @@
   		<version>8.3-603.jdbc4</version>
   		<!-- scope>runtime</scope-->
 	</dependency>
-    <dependency>
+    <!--dependency>
       <groupId>org.jenkins-ci.main</groupId>
       <artifactId>jenkins-core</artifactId>
       <version>1.495</version>
@@ -59,7 +59,7 @@
       <artifactId>jenkins-test-harness</artifactId>
       <version>1.495</version>
       <type>jar</type>
-    </dependency>
+    </dependency-->
   </dependencies>
    
   <licenses>
